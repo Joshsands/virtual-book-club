@@ -15,5 +15,7 @@
   "devDependencies": {
     "concurrently": "^5.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "yarn": "^1.22.15"
+  }
 }
