@@ -16,14 +16,14 @@
 
 ## Visual Demonstration
 
-![Virtual Book Club Snapshot](assets/snapshot.png)
+![Virtual Book Club Snapshot](assets/snapshot.jpg)
 
 ## Visual Demonstration
 * [Deployed Application](https://virtual-book-club.herokuapp.com/)
 
 ## Project Description
 
-* A virtual libaray for finding
+* A virtual library for finding and saving your favorite books.
 
 ## Installation Instructions
 
