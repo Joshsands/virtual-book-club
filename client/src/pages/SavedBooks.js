@@ -6,26 +6,21 @@ import {
   Card,
   Button,
 } from "react-bootstrap";
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutations";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
+import { QUERY_ME } from "../utils/queries";
+import { REMOVE_BOOK } from "../utils/mutations";
 
 const SavedBooks = () => {
+  // const [userData, setUserData] = useState({});
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeBook] = useMutation(REMOVE_BOOK);
+  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   const userData = data?.me || {};
 
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (!userData?.username) {
-    return (
-      <h4>You must be logged in to view this page. Please login or sign up.</h4>
-    );
   }
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -38,13 +33,12 @@ const SavedBooks = () => {
 
     try {
       await removeBook({
-        variables: { bookId: bookId },
+        variables: { bookId },
       });
-
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -78,6 +72,11 @@ const SavedBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className="small">Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
+                  <Card.Text>
+                    <a href={book.link} target="_blank">
+                      Click this link for info on this book!
+                    </a>
+                  </Card.Text>
                   <Button
                     className="btn-block btn-danger"
                     onClick={() => handleDeleteBook(book.bookId)}
